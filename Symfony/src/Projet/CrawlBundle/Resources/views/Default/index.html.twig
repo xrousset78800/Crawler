@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil || Crawler OP{% endblock %}
+
+{% block body %}
+<br />
+{% for c in cats %}
+<a class="homeLink" href="{{ path('crawl', { 'cat': c.lib }) }}">
+    <div class="homeBlock" >
+        {{c.lib}}
+    </div> 
+</a>
+{% endfor %}
+
+{% endblock %}
+
+{% block css %}
+<style>
+    .homeLink{
+        text-decoration: none;
+    }
+    .homeBlock{
+        border:1px solid grey;
+        width:23%;
+        margin:0.8%;
+        display:inline-block;
+        text-align: center;
+    }
+</style>
+{% endblock %}

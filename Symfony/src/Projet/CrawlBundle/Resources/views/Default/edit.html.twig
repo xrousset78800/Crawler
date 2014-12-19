@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition || Crawler OP{% endblock %}
+
+
+{% block body %}
+<ul id="listSelect">
+{% for key,e in elems %}
+    <a style="text-decoration: none;" href="{{key}}">
+        <li>{{e}}</li>
+    </a>
+{% endfor %}
+</ul>
+{% endblock %}
+
+
+{% block css%}
+<style>
+        #listSelect{
+            list-style: none;
+        }
+        #listSelect li{
+            display:inline-block;
+            height:95px;
+            width:95px;
+            border:1px solid red;
+            padding:10px;
+            vertical-align: top;
+        }
+</style>
+{% endblock%}

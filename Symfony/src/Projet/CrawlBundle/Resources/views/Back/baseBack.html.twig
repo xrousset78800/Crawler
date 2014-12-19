@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block css %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+{% endblock %}
+
+{% block body %}
+    <div class="page-content">
+        <div class='container'>
+            {% include 'CrawlBundle:Back:nav.html.twig' %}
+            
+            {% block content %}{% endblock %}
+            
+            {% include 'CrawlBundle:Back:footer.html.twig' %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript_header %}
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+{% endblock %}

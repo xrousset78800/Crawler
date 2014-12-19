@@ -1,0 +1,32 @@
+{#% extends 'XsolveBootstrapCrudBundle::examplelayout.html.twig' %#}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}Crawler OP{% endblock %}</title>
+        {% block meta %}
+            <meta charset="UTF-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+            <meta name="description" content="ATTRACTIF vente privée high tech"/>
+            <meta name="keywords" content="attractif, high tech, vente privée" />
+            <meta name="author" content="groupe G IP Formation" />
+        {% endblock %}           
+    {% block css %}{% endblock %}
+    {% block javascript_header %}{% endblock %}
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
+</head>
+<body>
+
+    {% block body %}
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="flash-message">
+                <em>Notice</em>: {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+    {% endblock %}
+    {% block javascripts %}
+    {% endblock %}
+</body>
+</html>

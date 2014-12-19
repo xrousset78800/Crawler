@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégories || Crawler OP{% endblock %}
+
+{% block body %}
+
+{% for c in crawl %}
+<div style="padding:20px;background:#e0e0e0;margin-bottom: 20px;border-radius:15px;">
+    {{c|raw}}
+</div>    
+{% endfor %}
+
+{% if site != "" %} <a href="#" data-width="1024" data-rel="popup1" class="poplight collector">Afficher le site</a>
+{% else %}
+<a href="#" data-width="512" data-rel="popup2" class="poplight">+</a>
+{% endif %}
+
+<div id="popup1" class="popup_block">
+    <section>
+        {{ site | raw }}
+    </section>
+</div>
+
+<div id="popup2" class="popup_block">
+    <h3>Url du site à crawler</h3>
+    <form id="selectLink" action="" method="post">
+        <label>Url :</label>
+        <input id="Link" name="Link" type="text" value="" />
+        <input type="submit" value="+" />
+    </form>
+</div>
+
+<form id="selectClass" action="" method="post">
+    <input id="STOO" name="stoo" type="hidden" value="" />
+</form>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+$( document ).ready(function() {
+	// POPUP 
+
+	//Lorsque vous cliquez sur un lien de la classe poplight
+	$('a.poplight').click(function(){
+            
+		var popID = $(this).data('rel'); //Trouver la pop-up correspondante
+		var popWidth = $(this).data('width'); //Trouver la largeur
+
+		//Faire apparaitre la pop-up et ajouter le bouton de fermeture
+		$('#' + popID).fadeIn().css({ 'width': popWidth}).prepend('<a href="#" class="close"><span class="btn_close">X</span></a>');
+		
+		//Apparition du fond - .css({'filter' : 'alpha(opacity=80)'}) pour corriger les bogues d'anciennes versions de IE
+		$('body').append('<div id="fade"></div>');
+		$('#fade').css({'filter' : 'alpha(opacity=80)'}).fadeIn();
+
+                return false;
+        });
+        
+        
+	$('a.collector').click(function() {
+	// DOM SELECTOR 
+        
+            $("#popup1").css("display", "block");
+            // On initialise la bordure à 0
+            $( "*" ).css('border-width', '0');
+            
+            // bordure au survol, que l'on annule ensuite	
+            $( "*" ).hover(function() {
+                $( "*" ).css("border", "none");
+                $( this ).css("border", "2px inset red");
+            });
+            $( "*" ).mouseleave(function() {
+                $( this ).css("border", "none");
+            });
+
+            // Get Dom Path
+            $("*").one('click', function() {
+                    event.stopPropagation();
+                    event.preventDefault();
+                var rightArrowParents = [],
+                    elm,
+                    test,
+                    entry;
+
+                for (elm = this.parentNode; elm; elm = elm.parentNode) {
+                    entry = elm.tagName.toLowerCase();
+                    if (entry === "html") {
+                        break;
+                    }
+                    if (elm.className) {
+                        entry += "." + elm.className.replace(/ /g, '.');
+                    }
+                    rightArrowParents.push(entry);
+                }
+                rightArrowParents.reverse();
+                test = rightArrowParents.join(" ");
+
+                if(confirm(test)){
+                    $("#STOO").val(rightArrowParents.join(" "));  
+                    // ET HOPPP, Submit() !
+                    $("#selectClass").submit();
+                }
+            });
+            return false;
+	});
+	
+	
+	//Close Popups and Fade Layer
+	$('.close, .btn_close, #fade').click(function() { //Au clic sur le body...
+		$('#fade , .popup_block').fadeOut(function() {
+			$('#fade, a.close').remove();  
+	}); //...ils disparaissent ensemble	
+		return false;
+	});
+
+});
+</script>
+{% endblock %}
+
+{% block css %}
+<style type="text/css">
+        *{
+          -webkit-box-sizing:border-box;
+          -moz-box-sizing:border-box;
+          -ms-box-sizing:border-box;
+          box-sizing:border-box;
+        }
+	#fade { /*--Masque opaque noir de fond--*/
+		display: none; /*--masqué par défaut--*/
+		background: #000;
+		position: fixed; left: 0; top: 0;
+		width: 100%; height: 100%;
+		opacity: .80;
+		z-index: 9999;
+	}
+	.popup_block{
+		display: none; /*--masqué par défaut--*/
+		background: #fff;
+		padding: 20px;
+		border: 20px solid #ddd;
+		font-size: 1.2em;
+		position: relative;
+                margin:0 auto;
+		z-index: 99999;
+		/*--Les différentes définitions de Box Shadow en CSS3--*/
+		-webkit-box-shadow: 0px 0px 20px #000;
+		-moz-box-shadow: 0px 0px 20px #000;
+		box-shadow: 0px 0px 20px #000;
+		/*--Coins arrondis en CSS3--*/
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		border-radius: 10px;
+	}
+        #popup1{
+            float:none;
+            width:1024px;
+        }
+	/*img*/.btn_close {
+		float: right;
+		margin: -37px -37px 0 0;
+	}
+	/*--Gérer la position fixed pour IE6--*/
+	*html #fade {
+	position: absolute;
+	}
+	*html .popup_block {
+	position: absolute;
+	}        
+</style>        
+{% endblock %}

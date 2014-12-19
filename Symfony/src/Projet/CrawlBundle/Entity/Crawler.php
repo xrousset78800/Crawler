@@ -1,0 +1,136 @@
+<?php
+
+namespace Projet\CrawlBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Crawler
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Crawler
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url", type="string", length=1023)
+     */
+    private $url;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=255)
+     */
+    private $nom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="selector", type="string", length=255)
+     */
+    private $selector;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="crawlers")
+     * @ORM\JoinColumn(name="crawler_id", referencedColumnName="id")
+     */
+    protected $category;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="userCrawl")
+     * @ORM\JoinColumn(name="user_crawl", referencedColumnName="id")
+     */
+    protected $userCrawl;    
+    
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set url
+     *
+     * @param string $url
+     * @return Crawler
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string 
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Set nom
+     *
+     * @param string $nom
+     * @return Crawler
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * Get nom
+     *
+     * @return string 
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * Set selector
+     *
+     * @param string $selector
+     * @return Crawler
+     */
+    public function setSelector($selector)
+    {
+        $this->selector = $selector;
+
+        return $this;
+    }
+
+    /**
+     * Get selector
+     *
+     * @return string 
+     */
+    public function getSelector()
+    {
+        return $this->selector;
+    }
+}

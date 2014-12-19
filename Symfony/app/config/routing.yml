@@ -1,0 +1,24 @@
+projet_crawl:
+    resource: "@ProjetCrawlBundle/Controller/DefaultController.php"
+    type:     annotation
+    prefix:   /
+    
+admin_cat:
+    resource: "@ProjetCrawlBundle/Controller/CategorieController.php"
+    type:     annotation
+    prefix:   /admin/categorie
+    
+admin_user:
+    resource: "@ProjetCrawlBundle/Controller/UserController.php"
+    type:     annotation
+    prefix:   /admin/user
+    
+admin_crawler:
+    resource: "@ProjetCrawlBundle/Controller/CrawlerController.php"
+    type:     annotation
+    prefix:   /admin/crawler
+
+admin:
+    resource: "@ProjetCrawlBundle/Controller/BackController.php"
+    type:     annotation
+    prefix:   /admin
